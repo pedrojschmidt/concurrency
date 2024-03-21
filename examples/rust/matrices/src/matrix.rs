@@ -1,4 +1,3 @@
-use std::thread;
 
 #[derive(Debug, Clone)]
 pub struct Matrix(pub Vec<Vec<f64>>);
@@ -9,34 +8,22 @@ impl Matrix {
 
     pub fn sum_serial(&self) -> f64 {
         let mut result = 0.0;
-        for i in 0..self.rows() {
-            result += self.add_row(i);
+        for row in &self.0 {
+            result += self.add_row(row);
         }
         return result;
     }
 
     pub fn sum_parallel(&self) -> f64 {
-        return thread::scope(|s| {
-            let mut threads = Vec::new();
-            for i in 0..self.rows() {
-                let thread = s.spawn(move || self.add_row(i));
-                threads.push(thread);
-            };
-
-            let mut result = 0.0;
-            for thread in threads {
-                result += thread.join().unwrap();
-            }
-            result
-        });
+        todo!("Implement me!")
     }
 
-    fn add_row(&self, i: usize) -> f64 {
-        let mut row = 0.0;
-        for j in 0..self.columns() {
-            row += self.0[i][j];
+    fn add_row(&self, row: &Vec<f64>) -> f64 {
+        let mut result = 0.0;
+        for v in row {
+            result += v;
         }
-        row
+        return result
     }
 
     pub fn add_serial(&self, other: &Matrix) -> Matrix {
@@ -52,23 +39,8 @@ impl Matrix {
         Matrix(result)
     }
 
-    pub fn add_parallel(&self, other: &Matrix) -> Matrix {
-        thread::scope(|s| {
-            let rows = self.rows();
-            let cols = self.columns();
-
-            let threads: Vec<_> = (0..rows)
-                .map(|i| {
-                    s.spawn(move || {
-                        (0..cols).map(|j| self.0[i][j] + other.0[i][j]).collect()
-                    })
-                })
-                .collect();
-
-            Matrix(threads.into_iter()
-                .map(|t| t.join().unwrap())
-                .collect())
-        })
+    pub fn add_parallel(&self, _: &Matrix) -> Matrix {
+        todo!("Implement me!")
     }
 
 
