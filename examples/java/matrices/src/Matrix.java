@@ -13,6 +13,26 @@ public class Matrix {
         return result;
     }
 
+    public double sumParallel() {
+        throw new RuntimeException("Implement me!");
+    }
+
+    public Matrix addSerial(Matrix other) {
+        double[][] result = new double[values.length][];
+        for (int i = 0; i < values.length; i++) {
+            int cols = values[i].length;
+            var row = new double[cols];
+            for (int j = 0; j < cols; j++) {
+                row[j] = values[i][j] + other.values[i][j];
+            }
+            result[i] = row;
+        }
+        return new Matrix(result);
+    }
+    public Matrix addParallel(Matrix other) {
+        throw new RuntimeException("Implement me!");
+    }
+
     private double addRow(double[] value) {
         var result = 0.0;
         for (double v : value) {
@@ -22,21 +42,4 @@ public class Matrix {
     }
 
 
-    public static void main(String[] args) {
-        Matrix m = create(10, 10_000);
-
-        System.out.println("Sum = " + m.sum());
-    }
-
-    private static Matrix create(int rows, int cols) {
-        double[][] result = new double[rows][];
-        for (int i = 0; i < rows; i++) {
-            var row = new double[cols];
-            for (int j = 0; j < cols; j++) {
-                row[j] = 1.0;
-            }
-            result[i] = row;
-        }
-        return new Matrix(result);
-    }
 }
