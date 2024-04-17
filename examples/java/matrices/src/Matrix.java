@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.function.Supplier;
+
 public class Matrix {
     private final double[][] values;
 
@@ -14,7 +17,26 @@ public class Matrix {
     }
 
     public double sumParallel() {
-        throw new RuntimeException("Implement me!");
+        var threads = new ArrayList<ThreadValue<Double>>();
+        for (double[] value : values) {
+            ThreadValue<Double> t = new ThreadValue<>(() -> addRow(value));
+            t.start();
+            threads.add(t);
+        }
+        // ---- Aca calcula
+        for (var thread : threads) {
+            try {
+                thread.join();
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        double result = 0.0;
+        for (var t : threads)
+            result += t.getValue();
+
+        return result;
+
     }
 
     public Matrix addSerial(Matrix other) {
@@ -39,6 +61,17 @@ public class Matrix {
             result += v;
         }
         return result;
+    }
+
+    static class ThreadValue<T> extends Thread {
+        private final Supplier<T> expression;
+        private T result;
+
+        public ThreadValue(Supplier<T> expression) {
+            this.expression = expression;
+        }
+        public void run() { result = expression.get(); }
+        public T getValue() { return result; }
     }
 
 

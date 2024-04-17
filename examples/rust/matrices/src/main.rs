@@ -4,12 +4,12 @@ use matrix::Matrix;
 mod matrix;
 
 fn main() {
-    let m1 = create_matrix(10, 10000);
+    let m1 = create_matrix(10, 10_000_000);
 
     test_sum(&m1);
 
-    let m2 = m1.clone();
-    test_add(&m1, &m2);
+    // let m2 = m1.clone();
+    // test_add(&m1, &m2);
 }
 
 fn test_sum(result: &Matrix) {

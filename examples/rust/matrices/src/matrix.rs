@@ -1,3 +1,4 @@
+use std::thread;
 
 #[derive(Debug, Clone)]
 pub struct Matrix(pub Vec<Vec<f64>>);
@@ -15,7 +16,18 @@ impl Matrix {
     }
 
     pub fn sum_parallel(&self) -> f64 {
-        todo!("Implement me!")
+       thread::scope(|s| {
+            let mut threads = Vec::new();
+            for row in &self.0 {
+                threads.push(s.spawn(move || self.add_row(&row)));
+            }
+
+            let mut result = 0.0;
+            for thread in threads {
+                result += thread.join().unwrap();
+            }
+            result
+        })
     }
 
     fn add_row(&self, row: &Vec<f64>) -> f64 {
@@ -40,7 +52,8 @@ impl Matrix {
     }
 
     pub fn add_parallel(&self, _: &Matrix) -> Matrix {
-        todo!("Implement me!")
+
+                todo!("Implement me!")
     }
 
 

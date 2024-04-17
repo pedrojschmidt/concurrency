@@ -1,15 +1,15 @@
 public class Main {
     public static void main(String[] args) {
-        Matrix m = create(10, 10_000);
+        Matrix m = create(10, 10_000_000);
 
         System.out.println("Sum = " + m.sum());
 
-        Matrix r = m.addSerial(m);
+       // Matrix r = m.addSerial(m);
 
-        System.out.println("Sum = " + r.sum());
+        System.out.println("Sum Parallel = " + m.sumParallel());
 
         testSum(m);
-        testAdd(m, m);
+       // testAdd(m, m);
     }
 
 
@@ -17,7 +17,7 @@ public class Main {
         var t0 = System.nanoTime();
         var m3 = m1.addSerial(m2);
         var t1 = System.nanoTime();
-        System.out.println("Serial 'add': " + (t1 - t0) / 1_000 + " ms");
+        System.out.println("Serial 'add': " + (t1 - t0) / 1_000 + " micros");
 
         var m4 = m1.addParallel(m2);
         var t2 = System.nanoTime();
