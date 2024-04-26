@@ -57,4 +57,6 @@ Finales: 28 Jun y  12 Julio
 
 
 
+## Kahoots
 
+[Introduction](https://create.kahoot.it/share/introduction-to-concurrent-programming/dd6f4485-3286-4e98-a89b-469d40450099)
