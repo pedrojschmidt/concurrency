@@ -17,6 +17,12 @@ public class HelloThreads {
         for (Thread thread : threads) {
             thread.join();
         }
+
+//        Para que se ejecuten de manera secuencial (espera a que termine uno para que empieze el siguiente):
+//        for (Thread thread : threads) {
+//            thread.start();
+//            thread.join();
+//        }
     }
 
 
