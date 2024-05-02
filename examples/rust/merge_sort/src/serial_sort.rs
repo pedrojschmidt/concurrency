@@ -1,5 +1,6 @@
 use crate::merge::merge;
 
+// Sorts both halves of the array sequentially
 pub fn sort(array: &[i32]) -> Vec<i32> {
     let len = array.len();
     if len <= 1 {
