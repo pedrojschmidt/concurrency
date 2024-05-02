@@ -51,9 +51,24 @@ impl Matrix {
         Matrix(result)
     }
 
-    pub fn add_parallel(&self, _: &Matrix) -> Matrix {
+    pub fn add_parallel(&self, other: &Matrix) -> Matrix {
+        let rows = self.rows();
+        let cols = self.columns();
 
-                todo!("Implement me!")
+        thread::scope(|s| {
+            let threads: Vec<_> = (0..rows)
+                .map(|i| {
+                    s.spawn(move || {
+                        (0..cols).map(|j| self.0[i][j] + other.0[i][j]).collect()
+                    })
+                })
+                .collect();
+
+            Matrix(threads.into_iter()
+                .map(|t| t.join().unwrap())
+                .collect()
+            )
+        })
     }
 
 
