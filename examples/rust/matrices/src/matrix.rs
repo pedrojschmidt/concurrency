@@ -41,13 +41,15 @@ impl Matrix {
     pub fn add_serial(&self, other: &Matrix) -> Matrix {
         let rows = self.rows();
         let cols = self.columns();
-        let result = (0..rows)
-            .map(|i|
-                (0..cols)
-                    .map(|j| self.0[i][j] + other.0[i][j])
-                    .collect()
-            )
-            .collect();
+        let mut result = Vec::new();
+
+        for i in 0..rows {
+            let mut row = Vec::new();
+            for j in 0..cols {
+                row.push(self.0[i][j] + other.0[i][j]);
+            }
+            result.push(row);
+        }
         Matrix(result)
     }
 
