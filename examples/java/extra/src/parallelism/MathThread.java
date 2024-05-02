@@ -1,3 +1,5 @@
+package parallelism;
+
 import java.util.function.Supplier;
 
 public class MathThread extends Thread {
