@@ -15,7 +15,7 @@ pub struct CircularBuffer<T> {
     not_full: Condvar
 }
 
-
+// Concurrent circular buffer
 impl<T> CircularBuffer<T> {
     // Creates a new circular buffer with a given capacity
     pub fn new(capacity: usize) -> CircularBuffer<T> {

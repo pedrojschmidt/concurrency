@@ -1,4 +1,5 @@
 
+// Non-concurrent circular buffer
 struct CircularBuffer<T> {
     buffer: Vec<Option<T>>,
     capacity: usize,
