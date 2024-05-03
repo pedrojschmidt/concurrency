@@ -5,6 +5,7 @@ use std::time::Duration;
 
 fn main() {
     let queue = Mutex::new(VecDeque::new());
+    // Create a condition variable
     let not_empty = Condvar::new();
 
     thread::scope(|s| {
@@ -24,9 +25,10 @@ fn main() {
             }
         });
 
+        // When pushing an item notify the condition variable
         for i in 0.. {
             queue.lock().unwrap().push_back(i);
-            not_empty.notify_one();
+            not_empty.notify_one(); // Notify the first thread that is waiting
            // thread::sleep(Duration::from_secs(1));
         }
     });
